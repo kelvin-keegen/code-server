@@ -1,9 +1,16 @@
-env:
-  IMAGE_NAME: ghcr.io/${{ github.repository }}
+name: Build and Publish Code-Server Docker Image
+
+on:
+  push:
+    branches:
+      - feature/*
 
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: ghcr.io/${{ github.repository }}
 
     steps:
     - name: Checkout code
