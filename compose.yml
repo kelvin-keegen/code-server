@@ -1,15 +1,18 @@
 services:
-  code-server:
+  ide:
     image: ghcr.io/kelvin-keegen/code-server:latest
     container_name: code-server
+    user: "coder"
     ports:
-      - "9090:8080"  # Expose port 8080 on the host to access code-server in the browser
+      - "9090:8080"
     environment:
       - JAVA_HOME=/home/coder/.sdkman/candidates/java/current
       - MAVEN_HOME=/home/coder/.sdkman/candidates/maven/current
       - PATH=/home/coder/.sdkman/candidates/java/current/bin:/home/coder/.sdkman/candidates/maven/current/bin:$PATH
     volumes:
-      - ./my_project:/my_projects
-      - ./code-server:/home/coder
+      - my_workspace:/my_workspace
+      - server_conf:/home/coder
     restart: unless-stopped
-    user: "coder"
+volumes:
+  my_workspace:
+  server_conf:

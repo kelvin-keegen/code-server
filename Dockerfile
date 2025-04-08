@@ -16,6 +16,9 @@ RUN apt-get update && \
     apt-get install -y curl unzip zip git && \
     apt-get clean
 
+# Remove coder from sudo group to prevent permission issues
+RUN deluser coder sudo || true
+
 # Switch back to the default user
 USER coder
 
@@ -36,7 +39,7 @@ RUN java -version && \
     mvn -v
 
 # Set default working directory
-WORKDIR /my_projects
+WORKDIR /my_workspace
 
 # Expose code-server port
 EXPOSE 8080
