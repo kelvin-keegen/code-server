@@ -10,5 +10,6 @@ services:
       - PATH=/home/coder/.sdkman/candidates/java/current/bin:/home/coder/.sdkman/candidates/maven/current/bin:$PATH
     volumes:
       - ./my_project:/my_projects
+      - ./code-server:/home/coder
     restart: unless-stopped
     user: "coder"
