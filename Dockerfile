@@ -35,6 +35,10 @@ ENV PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
 RUN java -version && \
     mvn -v
 
+# Install helpful VS Code extensions for Java and Spring Boot
+RUN code-server --install-extension redhat.java && \
+    code-server --install-extension vmware.vscode-boot-dev-pack
+
 # Set default working directory
 WORKDIR /my_workspace
 
