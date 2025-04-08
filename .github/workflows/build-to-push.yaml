@@ -49,7 +49,7 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         tag: v${{ env.VERSION }}
-        name: ${{ env.IMAGE_NAME }} v${{ env.VERSION }}
+        name: v${{ env.VERSION }}
         bodyFile: release-notes.md
         allowUpdates: true
         token: ${{ secrets.GITHUB_TOKEN }}
