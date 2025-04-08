@@ -3,7 +3,7 @@ name: Build and Publish Code-Server Docker Image
 on:
   push:
     branches:
-      - feature/*
+      - main
 
 jobs:
   build-and-release:
