@@ -2,4 +2,5 @@
 
 ## What has changed?
 
-- Minor refactor
+- Added Readme.MD
+- Added test workflow file
