@@ -35,10 +35,6 @@ ENV PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
 RUN java -version && \
     mvn -v
 
-# Install helpful VS Code extensions
-# RUN code-server --install-extension vscjava.vscode-java-pack && \
-#     code-server --install-extension pivotal.vscode-spring-boot
-
 # Set default working directory
 WORKDIR /home/coder/project
 
