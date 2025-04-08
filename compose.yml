@@ -1,30 +1,14 @@
-version: '3.8'
-
 services:
   code-server:
-    image: ghcr.io/${{ github.repository_owner }}/code-server-springboot:${{ env.VERSION }}  # Or the image you've built
-    container_name: code-server-springboot
+    image: ghcr.io/kelvin-keegen/code-server:latest
+    container_name: code-server
     ports:
-      - "8080:8080"  # Expose port 8080 on the host to access code-server in the browser
+      - "9090:8080"  # Expose port 8080 on the host to access code-server in the browser
     environment:
       - JAVA_HOME=/home/coder/.sdkman/candidates/java/current
       - MAVEN_HOME=/home/coder/.sdkman/candidates/maven/current
       - PATH=/home/coder/.sdkman/candidates/java/current/bin:/home/coder/.sdkman/candidates/maven/current/bin:$PATH
     volumes:
-      - ./project:/home/coder/project  # Mount your project directory inside the container
-      - code-server-config:/home/coder/.config/code-server  # Mount VS Code settings/config
-      - code-server-extensions:/home/coder/.local/share/code-server/extensions  # Mount VS Code extensions
-      - code-server-vscode:/home/coder/.vscode  # Optional: Mount additional VS Code configuration
-    networks:
-      - dev-network
+      - ./my_project:/my_projects
     restart: unless-stopped
     user: "coder"
-
-networks:
-  dev-network:
-    driver: bridge
-
-volumes:
-  code-server-config:
-  code-server-extensions:
-  code-server-vscode:  # Optional: You can add this if you want to persist more settings

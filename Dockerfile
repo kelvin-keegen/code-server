@@ -36,7 +36,7 @@ RUN java -version && \
     mvn -v
 
 # Set default working directory
-WORKDIR /home/coder/project
+WORKDIR /my_projects
 
 # Expose code-server port
 EXPOSE 8080
