@@ -39,6 +39,9 @@ RUN java -version && \
 RUN code-server --install-extension redhat.java && \
     code-server --install-extension vmware.vscode-boot-dev-pack
 
+# Copy custom VS Code user settings (e.g., to set a dark theme)
+COPY settings.json /home/coder/.local/share/code-server/User/settings.json
+
 # Set default working directory
 WORKDIR /my_workspace
 
