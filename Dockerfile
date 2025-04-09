@@ -4,7 +4,7 @@ FROM codercom/code-server:latest
 ARG JAVA_VERSION=21
 ARG JAVA_VARIANT=tem
 ARG MAVEN_VERSION=3.9.8
-ARG VERSION=1.0.1
+ARG VERSION=1.0.3
 
 LABEL version=${VERSION}
 
@@ -15,6 +15,9 @@ USER root
 RUN apt-get update && \
     apt-get install -y curl unzip zip git && \
     apt-get clean
+
+# Copy custom VS Code user settings (e.g., to set a dark theme)
+COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User/settings.json
 
 # Switch back to the default user
 USER coder
@@ -34,6 +37,11 @@ ENV PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
 # Verify Java and Maven installation
 RUN java -version && \
     mvn -v
+
+# Install helpful VS Code extensions for Java and Spring Boot
+RUN code-server --install-extension redhat.java \
+    && code-server --install-extension vmware.vscode-boot-dev-pack \
+    && code-server --install-extension vscjava.vscode-java-pack 
 
 # Set default working directory
 WORKDIR /my_workspace

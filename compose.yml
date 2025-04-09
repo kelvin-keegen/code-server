@@ -9,6 +9,7 @@ services:
       - JAVA_HOME=/home/coder/.sdkman/candidates/java/current
       - MAVEN_HOME=/home/coder/.sdkman/candidates/maven/current
       - PATH=/home/coder/.sdkman/candidates/java/current/bin:/home/coder/.sdkman/candidates/maven/current/bin:$PATH
+      - PASSWORD=your_password_here
     volumes:
       - my_workspace:/my_workspace
       - server_conf:/home/coder
