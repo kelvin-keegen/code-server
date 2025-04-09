@@ -16,6 +16,9 @@ RUN apt-get update && \
     apt-get install -y curl unzip zip git && \
     apt-get clean
 
+# Copy custom VS Code user settings (e.g., to set a dark theme)
+COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User/settings.json
+
 # Switch back to the default user
 USER coder
 
@@ -38,9 +41,6 @@ RUN java -version && \
 # Install helpful VS Code extensions for Java and Spring Boot
 RUN code-server --install-extension redhat.java && \
     code-server --install-extension vmware.vscode-boot-dev-pack
-
-# Copy custom VS Code user settings (e.g., to set a dark theme)
-COPY settings.json /home/coder/.local/share/code-server/User/settings.json
 
 # Set default working directory
 WORKDIR /my_workspace
