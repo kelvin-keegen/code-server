@@ -6,7 +6,7 @@ on:
       - feature/*
 
 jobs:
-  build-and-release:
+  build-and-release-dev-image:
     runs-on: ubuntu-latest
 
     env:
@@ -43,3 +43,6 @@ jobs:
         labels: |
           org.opencontainers.image.source=${{ github.repositoryUrl }}
           org.opencontainers.image.revision=${{ github.sha }}
+
+    - name: Logout from GitHub Container Registry
+      run: docker logout ghcr.io
