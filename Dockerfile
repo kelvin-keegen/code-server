@@ -41,7 +41,8 @@ RUN java -version && \
 # Install helpful VS Code extensions for Java and Spring Boot
 RUN code-server --install-extension redhat.java \
     && code-server --install-extension vmware.vscode-boot-dev-pack \
-    && code-server --install-extension vscjava.vscode-java-pack 
+    && code-server --install-extension vscjava.vscode-java-pack \
+    && code-server --install-extension github.copilot-chat
 
 # Set default working directory
 WORKDIR /my_workspace
