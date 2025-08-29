@@ -33,6 +33,7 @@ RUN echo "source $HOME/.sdkman/bin/sdkman-init.sh" >> ~/.bashrc && \
 ENV JAVA_HOME=/home/coder/.sdkman/candidates/java/current
 ENV MAVEN_HOME=/home/coder/.sdkman/candidates/maven/current
 ENV PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+ENV PROXY_DOMAIN=""
 
 # Verify Java and Maven installation
 RUN java -version && \
@@ -52,4 +53,4 @@ WORKDIR /my_workspace
 EXPOSE 8080
 
 # Start code-server
-CMD ["code-server", "--bind-addr", "0.0.0.0:8080", "."]
+CMD code-server --bind-addr 0.0.0.0:8080 . ${PROXY_DOMAIN:+--proxy-domain ${PROXY_DOMAIN}}
