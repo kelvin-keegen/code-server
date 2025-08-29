@@ -16,11 +16,16 @@ RUN apt-get update && \
     apt-get install -y curl unzip zip git && \
     apt-get clean
 
+# Copying entrypoint shell script
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 # Copy custom VS Code user settings (e.g., to set a dark theme)
 COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User/settings.json
 
 # Switch back to the default user
 USER coder
+
+# Modify permissions of entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Install SDKMAN! (to manage Java, Maven, etc.)
 RUN curl -s "https://get.sdkman.io" | bash
@@ -53,4 +58,5 @@ WORKDIR /my_workspace
 EXPOSE 8080
 
 # Start code-server
-CMD code-server --bind-addr 0.0.0.0:8080 . ${PROXY_DOMAIN:+--proxy-domain ${PROXY_DOMAIN}}
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+# CMD code-server --bind-addr 0.0.0.0:8080 . ${PROXY_DOMAIN:+--proxy-domain ${PROXY_DOMAIN}}
