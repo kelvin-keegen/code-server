@@ -2,5 +2,5 @@
 
 ## What has changed?
 
-- Added Readme.MD
+- Added Github Copilot
 - Minor house keeping
