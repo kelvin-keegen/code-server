@@ -16,13 +16,7 @@ RUN apt-get update && \
     apt-get install -y curl unzip zip git && \
     apt-get clean
 
-# Copying entrypoint shell script
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 # Copy custom VS Code user settings (e.g., to set a dark theme)
-
-# Modify permissions of entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
 COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User/settings.json
 
 # Switch back to the default user
@@ -58,4 +52,4 @@ WORKDIR /my_workspace
 EXPOSE 8080
 
 # Start code-server
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["code-server", "--bind-addr", "0.0.0.0:8080", "."]
