@@ -49,6 +49,7 @@ RUN java -version && \
 RUN code-server --install-extension redhat.java \
     && code-server --install-extension vmware.vscode-boot-dev-pack \
     && code-server --install-extension vscjava.vscode-java-pack \
+    && code-server --install-extension github.copilot \
     && code-server --install-extension github.copilot-chat \
     && code-server --install-extension redhat.vscode-yaml
 
