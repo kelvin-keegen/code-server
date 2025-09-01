@@ -19,13 +19,14 @@ RUN apt-get update && \
 # Copying entrypoint shell script
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 # Copy custom VS Code user settings (e.g., to set a dark theme)
+
+# Modify permissions of entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User/settings.json
 
 # Switch back to the default user
 USER coder
-
-# Modify permissions of entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Install SDKMAN! (to manage Java, Maven, etc.)
 RUN curl -s "https://get.sdkman.io" | bash
