@@ -39,7 +39,6 @@ RUN echo "source $HOME/.sdkman/bin/sdkman-init.sh" >> ~/.bashrc && \
 ENV JAVA_HOME=/home/coder/.sdkman/candidates/java/current
 ENV MAVEN_HOME=/home/coder/.sdkman/candidates/maven/current
 ENV PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
-ENV PROXY_DOMAIN=""
 
 # Verify Java and Maven installation
 RUN java -version && \
@@ -49,7 +48,6 @@ RUN java -version && \
 RUN code-server --install-extension redhat.java \
     && code-server --install-extension vmware.vscode-boot-dev-pack \
     && code-server --install-extension vscjava.vscode-java-pack \
-    && code-server --install-extension github.copilot \
     && code-server --install-extension github.copilot-chat \
     && code-server --install-extension redhat.vscode-yaml
 
@@ -61,4 +59,3 @@ EXPOSE 8080
 
 # Start code-server
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-# CMD code-server --bind-addr 0.0.0.0:8080 . ${PROXY_DOMAIN:+--proxy-domain ${PROXY_DOMAIN}}
