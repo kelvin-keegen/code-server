@@ -4,7 +4,7 @@ FROM codercom/code-server:latest
 ARG JAVA_VERSION=21
 ARG JAVA_VARIANT=tem
 ARG MAVEN_VERSION=3.9.8
-ARG VERSION=1.0.4
+ARG VERSION=1.0.5
 
 LABEL version=${VERSION}
 
@@ -41,7 +41,9 @@ RUN java -version && \
 # Install helpful VS Code extensions for Java and Spring Boot
 RUN code-server --install-extension redhat.java \
     && code-server --install-extension vmware.vscode-boot-dev-pack \
-    && code-server --install-extension vscjava.vscode-java-pack 
+    && code-server --install-extension vscjava.vscode-java-pack \
+    && code-server --install-extension github.copilot-chat \
+    && code-server --install-extension redhat.vscode-yaml
 
 # Set default working directory
 WORKDIR /my_workspace

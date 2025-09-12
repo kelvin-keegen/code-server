@@ -2,5 +2,6 @@
 
 ## What has changed?
 
-- Added Readme.MD
+- Added Github Copilot
+- Added yaml extension
 - Minor house keeping
