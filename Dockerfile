@@ -1,10 +1,10 @@
 # Base image with code-server preinstalled
-FROM codercom/code-server:latest
+FROM codercom/code-server:4.118.0
 
 ARG JAVA_VERSION=21
 ARG JAVA_VARIANT=tem
 ARG MAVEN_VERSION=3.9.8
-ARG VERSION=1.0.5
+ARG VERSION=1.0.6
 
 LABEL version=${VERSION}
 
