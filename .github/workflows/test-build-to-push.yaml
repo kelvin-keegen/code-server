@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/*
+      - update/*
 
 jobs:
   build-and-release-dev-image:
