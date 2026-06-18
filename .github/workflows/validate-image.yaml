@@ -1,0 +1,48 @@
+name: Validate Docker Image
+
+on:
+  push:
+    branches:
+      - feature/*
+      - update/*
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  validate-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build --tag code-server:test .
+
+      - name: Verify installed tooling
+        run: |
+          docker run --rm code-server:test sh -lc 'java -version && mvn -v && code-server --version'
+
+      - name: Smoke test container startup
+        env:
+          PASSWORD: integration-test-password
+        run: |
+          set -euo pipefail
+          container_id=$(docker run -d -p 127.0.0.1:8080:8080 -e PASSWORD="$PASSWORD" code-server:test)
+          cleanup() {
+            docker logs "$container_id"
+            docker rm -f "$container_id" >/dev/null 2>&1 || true
+          }
+          trap cleanup EXIT
+
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:8080/ >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+
+          echo "code-server failed to become ready"
+          exit 1
