@@ -23,7 +23,7 @@ jobs:
 
       - name: Verify installed tooling
         run: |
-          docker run --rm --entrypoint /bin/sh code-server:test -lc 'java -version && mvn -v && code-server --version'
+          docker run --rm --entrypoint /bin/bash code-server:test -lc 'source ~/.sdkman/bin/sdkman-init.sh && java -version && mvn -v && code-server --version'
 
       - name: Smoke test container startup
         env:
