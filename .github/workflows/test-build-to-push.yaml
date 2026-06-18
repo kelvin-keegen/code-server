@@ -1,20 +1,28 @@
-name: Build and Publish Code-Server Docker Image
+name: Build and Publish Dev Docker Image
 
 on:
-  push:
+  workflow_run:
+    workflows:
+      - Validate Docker Image
     branches:
       - feature/*
+      - update/*
+    types:
+      - completed
 
 jobs:
   build-and-release-dev-image:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' }}
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME: ghcr.io/${{ github.repository }}
+      IMAGE_NAME: ${{ github.repository }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Extract VERSION from Dockerfile
         id: extract-version
@@ -42,7 +50,7 @@ jobs:
             ghcr.io/${{ env.IMAGE_NAME }}:dev
           labels: |
             org.opencontainers.image.source=${{ github.repositoryUrl }}
-            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.revision=${{ github.event.workflow_run.head_sha }}
 
       - name: Logout from GitHub Container Registry
         run: docker logout ghcr.io
