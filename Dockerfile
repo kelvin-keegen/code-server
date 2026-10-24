@@ -11,9 +11,10 @@ LABEL version=${VERSION}
 # Switch to root user to install dependencies
 USER root
 
-# Install dependencies (curl, unzip, etc.)
+# Install dependencies, including Python 3, pip, and virtual environment support
 RUN apt-get update && \
-    apt-get install -y ca-certificates curl unzip zip git && \
+    apt-get install -y ca-certificates curl unzip zip git \
+        python3 python3-pip python3-venv python-is-python3 && \
     apt-get clean
 
 # Install Docker clients only; containers run on the mounted host daemon
@@ -50,9 +51,14 @@ ENV JAVA_HOME=/home/coder/.sdkman/candidates/java/current
 ENV MAVEN_HOME=/home/coder/.sdkman/candidates/maven/current
 ENV PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
 
-# Verify Java and Maven installation
+# Verify Java, Maven, and Python installations
 RUN java -version && \
-    mvn -v
+    mvn -v && \
+    python --version && \
+    python3 -m pip --version && \
+    python3 -m venv /tmp/python-venv-check && \
+    /tmp/python-venv-check/bin/python -m pip --version && \
+    rm -rf /tmp/python-venv-check
 
 # Install helpful VS Code extensions for Java and Spring Boot
 RUN code-server --install-extension redhat.java \
