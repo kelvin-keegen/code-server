@@ -34,7 +34,8 @@ USER coder
 
 # Install OpenCode and make it available in all shells
 ENV PATH=/home/coder/.opencode/bin:$PATH
-RUN curl -fsSL https://opencode.ai/install | bash && \
+# Avoid treating the image VERSION build argument as an OpenCode version pin.
+RUN curl -fsSL https://opencode.ai/install | env -u VERSION bash && \
     opencode --version
 
 # Install SDKMAN! (to manage Java, Maven, etc.)
