@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.1.1] - 2026-10-25
+
+### What has changed?
+
+- Fixed OpenCode being unavailable when an existing home volume hides the image-installed binary by moving it to `/opt/opencode/bin`, still owned and installed by `coder`.
+- Removed the Compose PATH override so OpenCode, Java, Maven, and system tools inherit the image's PATH.
+- Prevented the OpenCode installer from modifying shell configuration; user configuration and credentials remain in the persisted home directory.
+- Documented the OpenCode binary location, external PATH overrides, and container recreation without deleting volumes.
+
+---
+
 ## [1.1.0] - 2026-10-24
 
 ### What has changed?

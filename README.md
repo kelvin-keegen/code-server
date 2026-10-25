@@ -36,6 +36,12 @@ The Docker host must be a Linux host with Docker Engine running and Docker Compo
    ```
    Keep the existing named volumes to preserve your workspace and settings.
 
+### OpenCode
+
+OpenCode is installed as `coder` into `/opt/opencode/bin`, outside the persisted `/home/coder` volume. Image updates can replace the binary without an existing home volume hiding it. Configuration and application data remain under `/home/coder/.config/opencode` and `/home/coder/.local/share/opencode`.
+
+Allow the container to inherit the image's `PATH`. If an external Compose or deployment configuration overrides `PATH`, remove that override or include `/opt/opencode/bin` alongside the Java, Maven, and system binary directories. After rebuilding or pulling the updated image, recreate the container without deleting its volumes and check `opencode --version` in a new terminal.
+
 ### Host Docker Access
 
 The image includes the Docker CLI, Buildx, and the Compose plugin. Compose mounts the host Docker socket and adds its numeric group ID to `coder`'s supplementary groups. No Docker daemon runs inside code-server, and privileged mode is not required.
