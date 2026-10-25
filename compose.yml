@@ -10,7 +10,6 @@ services:
     environment:
       - JAVA_HOME=/home/coder/.sdkman/candidates/java/current
       - MAVEN_HOME=/home/coder/.sdkman/candidates/maven/current
-      - PATH=/home/coder/.sdkman/candidates/java/current/bin:/home/coder/.sdkman/candidates/maven/current/bin:$PATH
       - DOCKER_HOST=unix:///var/run/docker.sock
       - PASSWORD=your_password_here
     volumes:

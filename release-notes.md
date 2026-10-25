@@ -8,6 +8,7 @@
 - Upgraded the default Java version from 21 to 25 (Temurin).
 - Added Python 3, pip, and virtual environment support, with `python` mapped to Python 3 and build-time installation checks.
 - Added OpenCode to the image and shell PATH; prevented the image release version from incorrectly pinning the OpenCode version.
+- Kept OpenCode installed as `coder` but moved its binary to `/opt/opencode/bin` so persisted home volumes do not hide it; removed the Compose PATH override while preserving user configuration.
 - Added the Docker CLI, Buildx, and Compose plugin for host Docker daemon access through the mounted socket, without running a daemon inside the container.
 - Updated Compose to require `DOCKER_GID` for socket permissions and documented host Docker setup, security considerations, and local image rebuilds.
 

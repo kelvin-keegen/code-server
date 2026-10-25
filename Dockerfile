@@ -30,13 +30,17 @@ RUN install -m 0755 -d /etc/apt/keyrings && \
 # Copy custom VS Code user settings (e.g., to set a dark theme)
 COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User/settings.json
 
+# Keep OpenCode user-owned but outside the persisted home volume.
+RUN install -d -m 0755 -o coder -g coder /opt/opencode/bin
+
 # Switch back to the default user
 USER coder
 
-# Install OpenCode and make it available in all shells
-ENV PATH=/home/coder/.opencode/bin:$PATH
+# Install OpenCode as coder without modifying persisted shell configuration.
+ENV PATH=/opt/opencode/bin:$PATH
 # Avoid treating the image VERSION build argument as an OpenCode version pin.
-RUN curl -fsSL https://opencode.ai/install | env -u VERSION bash && \
+RUN curl -fsSL https://opencode.ai/install | env -u VERSION bash -s -- --no-modify-path && \
+    mv /home/coder/.opencode/bin/opencode /opt/opencode/bin/opencode && \
     opencode --version
 
 # Install SDKMAN! (to manage Java, Maven, etc.)
